@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Creator Studio - Portfolio Case Study</title>
+    <meta
+      name="description"
+      content="AI Creator Studio portfolio case study: an AI SaaS prototype for generating complete game and anime project bibles."
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #060b14;
+        --panel: rgba(13, 22, 38, 0.78);
+        --panel-strong: rgba(16, 28, 48, 0.92);
+        --line: rgba(148, 163, 184, 0.24);
+        --text: #f8fafc;
+        --muted: #a8b3c7;
+        --soft: #dbe7ff;
+        --cyan: #22d3ee;
+        --blue: #3b82f6;
+        --violet: #8b5cf6;
+        --gold: #f5c451;
+        --green: #2dd4bf;
+        --radius: 8px;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "Microsoft YaHei", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 12% 18%, rgba(34, 211, 238, 0.13), transparent 28rem),
+          radial-gradient(circle at 82% 10%, rgba(139, 92, 246, 0.16), transparent 32rem),
+          linear-gradient(180deg, #07101e 0%, var(--bg) 44%, #050914 100%);
+        color: var(--text);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img,
+      video {
+        display: block;
+        max-width: 100%;
+      }
+
+      .page {
+        overflow: hidden;
+      }
+
+      .nav {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 18px clamp(20px, 4vw, 64px);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+        background: rgba(4, 9, 17, 0.74);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: max-content;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 1px solid rgba(125, 211, 252, 0.42);
+        border-radius: 8px;
+        background: linear-gradient(145deg, rgba(59, 130, 246, 0.24), rgba(45, 212, 191, 0.18));
+        font-weight: 900;
+        color: #e0f2fe;
+      }
+
+      .brand-title {
+        display: grid;
+        gap: 2px;
+      }
+
+      .brand-title strong {
+        font-size: 13px;
+        letter-spacing: 0.28em;
+      }
+
+      .brand-title span {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.22em;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #cbd5e1;
+        font-size: 13px;
+      }
+
+      .nav-links a {
+        border: 1px solid transparent;
+        border-radius: 999px;
+        padding: 8px 12px;
+      }
+
+      .nav-links a:hover {
+        border-color: rgba(148, 163, 184, 0.22);
+        background: rgba(15, 23, 42, 0.82);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        border: 1px solid rgba(125, 211, 252, 0.34);
+        border-radius: var(--radius);
+        padding: 0 18px;
+        background: linear-gradient(135deg, var(--blue), #0f9f8d);
+        color: white;
+        font-weight: 900;
+        box-shadow: 0 18px 48px rgba(37, 99, 235, 0.26);
+      }
+
+      .btn.secondary {
+        background: rgba(3, 7, 18, 0.58);
+        box-shadow: none;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 92vh;
+        display: grid;
+        align-items: end;
+        padding: 116px clamp(20px, 4vw, 64px) 56px;
+        background:
+          linear-gradient(90deg, rgba(4, 8, 16, 0.95) 0%, rgba(4, 8, 16, 0.7) 38%, rgba(4, 8, 16, 0.24) 74%),
+          linear-gradient(180deg, rgba(4, 8, 16, 0.26), rgba(4, 8, 16, 0.92)),
+          url("assets/tianyan-home.png") center / cover no-repeat;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      }
+
+      .hero-inner {
+        width: min(1180px, 100%);
+      }
+
+      .eyebrow {
+        color: var(--cyan);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        max-width: 820px;
+        margin-top: 18px;
+        font-size: clamp(44px, 7vw, 96px);
+        line-height: 0.96;
+        letter-spacing: 0;
+      }
+
+      .hero-copy {
+        max-width: 640px;
+        margin-top: 24px;
+        color: #d8e5f8;
+        font-size: clamp(17px, 2vw, 22px);
+        line-height: 1.7;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .meta-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        width: min(860px, 100%);
+        gap: 10px;
+        margin-top: 42px;
+      }
+
+      .meta {
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: var(--radius);
+        padding: 14px;
+        background: rgba(3, 7, 18, 0.48);
+      }
+
+      .meta span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .meta strong {
+        display: block;
+        margin-top: 6px;
+        font-size: 16px;
+      }
+
+      main {
+        padding: 72px clamp(20px, 4vw, 64px);
+      }
+
+      .section {
+        width: min(1180px, 100%);
+        margin: 0 auto 78px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .section h2 {
+        font-size: clamp(28px, 4vw, 46px);
+        line-height: 1.12;
+      }
+
+      .section-lede {
+        max-width: 660px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.75;
+      }
+
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .grid.cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .grid.cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        padding: 22px;
+        box-shadow: 0 22px 70px rgba(2, 6, 23, 0.28);
+      }
+
+      .panel h3 {
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+
+      .panel p,
+      .panel li {
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .tag {
+        border: 1px solid rgba(59, 130, 246, 0.5);
+        border-radius: 6px;
+        padding: 6px 9px;
+        background: rgba(30, 64, 175, 0.28);
+        color: #bfdbfe;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .showcase-card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(12, 20, 34, 0.84);
+      }
+
+      .showcase-card img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+      }
+
+      .showcase-card.tall img {
+        height: 420px;
+      }
+
+      .showcase-body {
+        padding: 18px;
+      }
+
+      .showcase-body span {
+        color: var(--cyan);
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .showcase-body h3 {
+        margin-top: 8px;
+        font-size: 22px;
+      }
+
+      .showcase-body p {
+        margin-top: 8px;
+        color: var(--muted);
+        line-height: 1.62;
+      }
+
+      .feature-map {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 14px;
+        align-items: stretch;
+      }
+
+      .feature-visual {
+        min-height: 420px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background:
+          linear-gradient(180deg, rgba(2, 6, 23, 0.08), rgba(2, 6, 23, 0.72)),
+          url("assets/project-visual-overview.png") center / cover no-repeat;
+      }
+
+      .feature-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .feature-item {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px;
+        background: rgba(15, 23, 42, 0.76);
+      }
+
+      .feature-item b {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--soft);
+        font-size: 17px;
+      }
+
+      .feature-item p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .image-tile {
+        position: relative;
+        overflow: hidden;
+        min-height: 250px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #020617;
+      }
+
+      .image-tile.wide {
+        grid-column: span 2;
+      }
+
+      .image-tile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.32s ease, filter 0.32s ease;
+      }
+
+      .image-tile:hover img {
+        transform: scale(1.04);
+        filter: saturate(1.08);
+      }
+
+      .image-tile span {
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        padding: 7px 9px;
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        border-radius: 6px;
+        background: rgba(2, 6, 23, 0.72);
+        color: #f8fafc;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .video-frame {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #020617;
+      }
+
+      .video-frame video {
+        width: 100%;
+        max-height: 520px;
+        object-fit: cover;
+      }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .step {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px;
+        background: rgba(15, 23, 42, 0.7);
+      }
+
+      .step span {
+        color: var(--gold);
+        font-weight: 900;
+      }
+
+      .footer {
+        border-top: 1px solid rgba(148, 163, 184, 0.16);
+        padding: 34px clamp(20px, 4vw, 64px);
+        color: var(--muted);
+      }
+
+      @media (max-width: 980px) {
+        .nav-links {
+          display: none;
+        }
+
+        .meta-strip,
+        .grid.cols-3,
+        .grid.cols-2,
+        .feature-map,
+        .timeline {
+          grid-template-columns: 1fr;
+        }
+
+        .feature-list,
+        .image-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .image-tile.wide {
+          grid-column: span 2;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero {
+          min-height: 86vh;
+          padding-top: 96px;
+        }
+
+        .brand-title strong {
+          letter-spacing: 0.16em;
+        }
+
+        .hero-actions,
+        .section-head {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        .feature-list,
+        .image-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .image-tile.wide {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <nav class="nav" aria-label="Portfolio navigation">
+        <a class="brand" href="#top" aria-label="AI Creator Studio">
+          <span class="brand-mark">A</span>
+          <span class="brand-title">
+            <strong>AI CREATOR STUDIO</strong>
+            <span>PORTFOLIO CASE</span>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a href="#product">产品</a>
+          <a href="#demo">Demo 世界</a>
+          <a href="#assets">视觉资产</a>
+          <a href="#prototype">可点击 MVP</a>
+        </div>
+        <a class="btn" href="ai-creator-studio-mvp.html">打开 MVP -></a>
+      </nav>
+
+      <header class="hero" id="top">
+        <div class="hero-inner">
+          <div class="eyebrow">AI SaaS Product Design / Clickable MVP</div>
+          <h1>AI 一键生成游戏与动漫项目全案</h1>
+          <p class="hero-copy">
+            AI Creator Studio 是一个面向创作者的产品原型：输入关键词后，系统生成世界观、角色设定、玩法系统、美术资产、3D 模型规划与项目文档。
+            当前展示为 Demo 版本，最终目标是由 AI 自动完成完整内容生成。
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="ai-creator-studio-mvp.html">体验可点击 MVP -></a>
+            <a class="btn secondary" href="#product">查看项目说明</a>
+          </div>
+          <div class="meta-strip" aria-label="Project summary">
+            <div class="meta"><span>项目类型</span><strong>AI SaaS / Creative Tool</strong></div>
+            <div class="meta"><span>核心输出</span><strong>Game Bible + Asset Pack</strong></div>
+            <div class="meta"><span>Demo 世界</span><strong>天衍纪元</strong></div>
+            <div class="meta"><span>原型状态</span><strong>Portfolio Ready</strong></div>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="section" id="product">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Product Positioning</div>
+              <h2>把零散灵感变成可管理的创作工作室</h2>
+            </div>
+            <p class="section-lede">
+              这个 MVP 聚焦一个清晰的用户旅程：从一句创意开始，逐步生成项目全案；生成后用户可以进入各资产工作区，针对单个角色、插画、玩法或模型继续修改。
+            </p>
+          </div>
+          <div class="grid cols-3">
+            <article class="panel">
+              <h3>目标用户</h3>
+              <p>独立游戏创作者、动漫企划、概念设计师、小型内容团队，以及需要快速验证世界观和视觉方向的人。</p>
+            </article>
+            <article class="panel">
+              <h3>核心体验</h3>
+              <p>关键词输入、可选设定、生成状态动画、工作台总览、模块化资产管理、单项修改、订阅与积分体系。</p>
+            </article>
+            <article class="panel">
+              <h3>设计重点</h3>
+              <p>让 AI 生成结果看起来像“可继续生产的项目资产库”，而不是一次性聊天回复。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="prototype">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Interactive Prototype</div>
+              <h2>可点击 MVP 已经具备完整产品路径</h2>
+            </div>
+            <a class="btn" href="ai-creator-studio-mvp.html">进入原型 -></a>
+          </div>
+          <div class="feature-map">
+            <div class="feature-visual" aria-label="Project visual overview"></div>
+            <div class="feature-list">
+              <div class="feature-item"><b>01 生成入口</b><p>中文/英文切换、关键词输入、多级风格选择、生成状态动画。</p></div>
+              <div class="feature-item"><b>02 工作台</b><p>项目封面、角色预览、输出预览、创作进度和治理动态集中展示。</p></div>
+              <div class="feature-item"><b>03 资产工作区</b><p>世界观、玩法、角色、美术、3D、文档均为独立页面，支持继续编辑。</p></div>
+              <div class="feature-item"><b>04 商业化入口</b><p>积分余额、订阅计划、单独购买积分、用户中心和支付信息弹窗。</p></div>
+              <div class="feature-item"><b>05 细粒度修改</b><p>角色单独编辑、关系网管理、插画单项修改、3D 模型状态和预览。</p></div>
+              <div class="feature-item"><b>06 Portfolio 展示</b><p>用真实 Demo 资产展示最终效果，同时保留“这是 AI 生成系统原型”的定位。</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="demo">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Demo World</div>
+              <h2>天衍纪元：东方未来修仙 RPG</h2>
+            </div>
+            <p class="section-lede">
+              在灵能科技与门派修行共存的未来世界中，玩家建立门派、结盟或背叛，并改写天空秩序。
+            </p>
+          </div>
+          <div class="grid cols-2">
+            <article class="showcase-card">
+              <img src="assets/project-visual-overview.png" alt="天衍纪元世界观大插画" />
+              <div class="showcase-body">
+                <span>World Bible</span>
+                <h3>世界观生成</h3>
+                <p>输出时代背景、核心冲突、主要势力、关键地点、世界氛围和故事关键词。</p>
+                <div class="tag-row">
+                  <span class="tag">东方未来城市</span>
+                  <span class="tag">御剑飞行</span>
+                  <span class="tag">灵能科技</span>
+                  <span class="tag">门派纷争</span>
+                </div>
+              </div>
+            </article>
+            <article class="showcase-card">
+              <video src="assets/gameplay-cg-demo.mp4" autoplay muted loop playsinline preload="metadata"></video>
+              <div class="showcase-body">
+                <span>Gameplay Preview</span>
+                <h3>玩法 CG 预览</h3>
+                <p>用于演示探索、战斗、成长与抉择循环的位置。正式产品中这里会由 AI 生成短视频或动态分镜。</p>
+                <div class="tag-row">
+                  <span class="tag">探索</span>
+                  <span class="tag">战斗</span>
+                  <span class="tag">成长</span>
+                  <span class="tag">多结局</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="assets">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Generated Asset Library</div>
+              <h2>角色、场景、怪物、道具与视觉参考</h2>
+            </div>
+            <p class="section-lede">
+              Demo 素材用于说明产品最终输出形态：用户不是只获得文字，而是获得一套可继续迭代的资产库。
+            </p>
+          </div>
+          <div class="image-grid">
+            <a class="image-tile" href="assets/character-yewuchen.png"><img src="assets/character-yewuchen.png" alt="夜无尘角色立绘" /><span>夜无尘</span></a>
+            <a class="image-tile" href="assets/character-liyue.png"><img src="assets/character-liyue.png" alt="璃月角色立绘" /><span>璃月</span></a>
+            <a class="image-tile" href="assets/character-moxuan.png"><img src="assets/character-moxuan.png" alt="墨玄角色立绘" /><span>墨玄</span></a>
+            <a class="image-tile" href="assets/character-baiwei.png"><img src="assets/character-baiwei.png" alt="白薇角色立绘" /><span>白薇</span></a>
+            <a class="image-tile wide" href="assets/scene-yunhai-city.png"><img src="assets/scene-yunhai-city.png" alt="云海主城场景概念图" /><span>云海主城</span></a>
+            <a class="image-tile wide" href="assets/scene-neon-alley.png"><img src="assets/scene-neon-alley.png" alt="霓虹雨巷场景概念图" /><span>霓虹雨巷</span></a>
+            <a class="image-tile wide" href="assets/scene-floating-temple.png"><img src="assets/scene-floating-temple.png" alt="悬浮古寺场景概念图" /><span>悬浮古寺</span></a>
+            <a class="image-tile wide" href="assets/scene-underground-port.png"><img src="assets/scene-underground-port.png" alt="灵能地下港场景概念图" /><span>灵能地下港</span></a>
+            <a class="image-tile wide" href="assets/monster-creature-sheet.png"><img src="assets/monster-creature-sheet.png" alt="怪物设定集" /><span>怪物设定集</span></a>
+            <a class="image-tile wide" href="assets/style-moodboard.png"><img src="assets/style-moodboard.png" alt="整体视觉 Moodboard" /><span>整体 Moodboard</span></a>
+            <a class="image-tile" href="assets/asset-spirit-compass.png"><img src="assets/asset-spirit-compass.png" alt="灵能罗盘道具设定" /><span>灵能罗盘</span></a>
+            <a class="image-tile" href="assets/asset-obsidian-sword.png"><img src="assets/asset-obsidian-sword.png" alt="黑曜灵剑道具设定" /><span>黑曜灵剑</span></a>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Design System Thinking</div>
+              <h2>从“一次生成”升级成“持续编辑”</h2>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="step"><span>01</span><h3>输入灵感</h3><p>用户先给大方向，再通过多级选项补充世界基调、故事风格、玩法和美术风格。</p></div>
+            <div class="step"><span>02</span><h3>生成全案</h3><p>系统产出完整项目框架，并用工作台展示当前完成度、资产数量和下一步建议。</p></div>
+            <div class="step"><span>03</span><h3>进入资产页</h3><p>每个模块都是独立工作区，用户可以修改某个角色、某张插画或某个模型。</p></div>
+            <div class="step"><span>04</span><h3>沉淀项目</h3><p>项目最终导出为世界观文档、角色设定集、美术设定集、3D 清单和项目提案。</p></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="grid cols-2">
+            <article class="panel">
+              <h3>Portfolio 版本说明</h3>
+              <p>
+                这页用于对外展示项目概念、产品路径和视觉结果。真正的交互体验仍然在 MVP 页面里，后续可以继续接入真实 AI 生成、登录、支付、云端项目存储和图片/视频生成 API。
+              </p>
+            </article>
+            <article class="panel">
+              <h3>下一阶段</h3>
+              <p>
+                建议下一步拆成真实产品架构：用户系统、项目数据库、AI 任务队列、资产存储、积分计费、生成状态追踪，以及可复用的 Prompt / Style Bible 体系。
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        AI Creator Studio Portfolio Demo. Built as a static showcase with a clickable MVP prototype.
+      </footer>
+    </div>
+  </body>
+</html>

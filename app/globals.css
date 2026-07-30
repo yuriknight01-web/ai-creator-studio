@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: #07111f;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(56, 213, 255, 0.14), transparent 30rem),
+    radial-gradient(circle at 70% 0%, rgba(124, 92, 255, 0.18), transparent 34rem),
+    linear-gradient(180deg, #07111f 0%, #0a1322 48%, #07111f 100%);
+  color: #e8f1ff;
+  font-family:
+    Arial,
+    "Microsoft YaHei",
+    "PingFang SC",
+    sans-serif;
+}
+
+button,
+textarea,
+input {
+  font: inherit;
+}
