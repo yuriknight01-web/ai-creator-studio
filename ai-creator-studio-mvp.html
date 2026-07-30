@@ -1219,9 +1219,9 @@
           sideVersion: en ? "v0.1 · In Progress" : "v0.1 · 进行中",
           newProject: en ? "New Project" : "新建项目",
           railCharacterTitle: en ? "Character Preview" : "角色预览",
-          railCharacterSubtitle: en ? "角色预览" : "Character Preview",
+          railCharacterSubtitle: en ? "Character Preview" : "角色预览",
           railOutputTitle: en ? "Output Preview" : "输出预览",
-          railOutputSubtitle: en ? "输出预览" : "Outputs Preview",
+          railOutputSubtitle: en ? "Outputs Preview" : "输出预览",
           railExport: en ? "Export Project ↓" : "导出项目 ↓",
           meta: en ? [
             ["Completion", "68%", "accent-green"],
@@ -1252,8 +1252,8 @@
             ["美术 & 视觉", "Art & Visual"],
             ["项目输出", "Export"]
           ],
-          progressHeading: en ? `Creation Progress <small style="color:#94a3b8;font-size:12px">创作进度</small>` : `创作进度 <small style="color:#94a3b8;font-size:12px">Creation Progress</small>`,
-          governanceHeading: en ? `Governance Activity <small style="color:#94a3b8;font-size:12px">治理动态</small>` : `治理动态 <small style="color:#94a3b8;font-size:12px">Governance Activity</small>`,
+          progressHeading: en ? `Creation Progress <small style="color:#94a3b8;font-size:12px">Workflow Status</small>` : `创作进度 <small style="color:#94a3b8;font-size:12px">Creation Progress</small>`,
+          governanceHeading: en ? `Governance Activity <small style="color:#94a3b8;font-size:12px">Review Log</small>` : `治理动态 <small style="color:#94a3b8;font-size:12px">Governance Activity</small>`,
           outputDocs: en ? ["World Bible (PDF)", "Character Design Bible (PDF)", "Art Direction Bible (PDF)", "Pitch Deck (PPT)"] : ["世界观文档 (PDF)", "角色设定集 (PDF)", "美术设定集 (PDF)", "项目提案 (PPT)"]
         };
       }
@@ -1330,11 +1330,11 @@
 
       function renderShowcaseProgress() {
         const cards = languageMode === "en" ? [
-          ["world", "World Bible", "世界观", "View key art, central conflict, and major factions", "90%", "accent-cyan"],
-          ["gameplay", "Gameplay", "玩法 & 系统", "View core loop, combat systems, and preview", "60%", "accent-amber"],
-          ["characters", "Characters", "角色设定", "View main characters, portraits, and relationships", "80%", "accent-violet"],
-          ["visual", "Art & Visual", "美术 & 视觉", "View scenes, characters, creatures, and props", "70%", "accent-green"],
-          ["models", "3D Models", "3D 模型", "View character, scene, creature models and materials", "40%", "accent-cyan"]
+            ["world", "World Bible", "World Setting", "View key art, central conflict, and major factions", "90%", "accent-cyan"],
+            ["gameplay", "Gameplay", "System Design", "View core loop, combat systems, and preview", "60%", "accent-amber"],
+            ["characters", "Characters", "Cast & Relations", "View main characters, portraits, and relationships", "80%", "accent-violet"],
+            ["visual", "Art & Visual", "Visual Assets", "View scenes, characters, creatures, and props", "70%", "accent-green"],
+            ["models", "3D Models", "Model Assets", "View character, scene, creature models and materials", "40%", "accent-cyan"]
         ] : [
           ["world", "世界观", "World Bible", "查看世界观大插画、核心冲突与主要势力", "90%", "accent-cyan"],
           ["gameplay", "玩法 & 系统", "Gameplay", "查看玩法循环、战斗系统与 CG 预览", "60%", "accent-amber"],
@@ -1396,12 +1396,19 @@
 
       function renderResultWorldPage() {
         const data = editableProject;
-        return `${resultHeader("世界观", "单纯展示当前项目的世界成果，不进入资产编辑区。", ["世界总览", "历史 & 时代", "势力 & 阵营", "地理 & 区域", "文化 & 信仰"])}<div class="result-shell"><section class="result-main"><div class="showcase-hero"><div><small class="accent-cyan">世界观大插画</small><h2 style="font-size:34px;color:#fff;margin:10px 0">${data.title}</h2><p style="line-height:1.8;color:#cbd5e1">${data.tagline}</p></div></div><section class="panel"><h2>世界概述</h2><p style="line-height:1.85;color:#cbd5e1">${data.overview}</p></section><section class="panel"><h2>重要地点</h2><div class="asset-gallery">${data.art[0][1].map((name) => `<article class="gallery-card"><div class="${thumbClass(name)}"></div><b>${name}</b><small>核心区域概念图</small></article>`).join("")}</div></section></section><aside class="result-rail"><section class="rail-card"><h2>世界基础信息</h2><div class="outputs">${["世界名称：" + data.title, "别名：" + data.era, "类型：科技修仙 / 东方未来", "当前状态：动荡不安", "最后更新：2 分钟前"].map((x) => `<div class="out"><span>${x}</span></div>`).join("")}</div></section><section class="rail-card"><h2>核心冲突</h2><p style="line-height:1.75;color:#cbd5e1">${data.conflict}</p></section><section class="rail-card"><h2>关键主题</h2>${tags(data.keywords.slice(0, 6))}</section></aside></div>`;
+        const cn = languageMode === "cn";
+        const tabs = cn ? ["世界总览", "历史 & 时代", "势力 & 阵营", "地理 & 区域", "文化 & 信仰"] : ["Overview", "History & Era", "Factions", "Geography", "Culture"];
+        const facts = cn
+          ? ["世界名称：" + data.title, "别名：" + data.era, "类型：科技修仙 / 东方未来", "当前状态：动荡不安", "最后更新：2 分钟前"]
+          : ["World Name: " + data.title, "Alias: " + data.era, "Type: Tech Cultivation / Eastern Future", "Current State: Unstable", "Last Updated: 2 min ago"];
+        return `${resultHeader(cn ? "世界观生成" : "World Bible", cn ? "查看并调整当前项目的世界观与关键词设定。" : "Review and tune the current project's world setting and keyword structure.", tabs)}<div class="result-shell"><section class="result-main"><div class="showcase-hero"><div><small class="accent-cyan">${cn ? "世界观大插画" : "World Key Art"}</small><h2 style="font-size:34px;color:#fff;margin:10px 0">${data.title}</h2><p style="line-height:1.8;color:#cbd5e1">${data.tagline}</p></div></div><section class="panel"><h2>${cn ? "世界概述" : "World Overview"}</h2><p style="line-height:1.85;color:#cbd5e1">${data.overview}</p></section><section class="panel"><h2>${cn ? "重要地点" : "Key Locations"}</h2><div class="asset-gallery">${data.art[0][1].map((name) => `<article class="gallery-card"><div class="${thumbClass(name)}"></div><b>${name}</b><small>${cn ? "核心区域概念图" : "Core region concept art"}</small></article>`).join("")}</div></section></section><aside class="result-rail"><section class="rail-card"><h2>${cn ? "世界基础信息" : "World Facts"}</h2><div class="outputs">${facts.map((x) => `<div class="out"><span>${x}</span></div>`).join("")}</div></section><section class="rail-card"><h2>${cn ? "核心冲突" : "Core Conflict"}</h2><p style="line-height:1.75;color:#cbd5e1">${data.conflict}</p></section><section class="rail-card"><h2>${cn ? "关键主题" : "Key Themes"}</h2>${tags(data.keywords.slice(0, 6))}</section></aside></div>`;
       }
 
       function renderResultCharactersPage() {
         const data = editableProject;
-        return `${resultHeader("角色设定", "展示项目中的主要角色、关系网络与人物插画。", ["主要角色", "次要角色", "角色关系", "角色分组", "设定集"])}<div class="result-shell"><section class="result-main"><section class="panel"><h2>主要角色</h2><div class="asset-gallery">${data.characters.map((c) => `<article class="gallery-card"><div class="${avatarClass(c[1])}" style="height:220px;margin-bottom:12px"></div><b>${c[1]}</b><small>${c[0]} · ${c[2]}</small><small>${c[3]}</small>${tags([c[4], c[5]])}</article>`).join("")}</div></section><section class="panel"><h2>角色关系</h2><div class="showcase-grid">${data.relations.map((item) => `<div class="mini"><p>${item}</p></div>`).join("")}</div></section><section class="panel"><h2>角色列表</h2><div class="outputs">${data.characters.map((c) => `<div class="out"><span>${c[1]} · ${c[0]}</span><span class="file-status">${c[6]}</span></div>`).join("")}</div></section></section><aside class="result-rail"><section class="rail-card"><h2>角色详情</h2><div class="${avatarClass(data.characters[0][1])}" style="height:260px;margin:10px 0"></div><h3 style="color:white">${data.characters[0][1]}</h3><p style="color:#cbd5e1;line-height:1.7">${data.characters[0][2]}，${data.characters[0][3]}。</p></section><section class="rail-card"><h2>设定图集</h2><div class="asset-gallery" style="grid-template-columns:repeat(3,1fr)">${data.characters.slice(0,3).map((c) => `<div class="${avatarClass(c[1])}"></div>`).join("")}</div></section></aside></div>`;
+        const cn = languageMode === "cn";
+        const tabs = cn ? ["主要角色", "次要角色", "角色关系", "角色分组", "设定集"] : ["Main Cast", "Supporting Cast", "Relationships", "Groups", "Character Bible"];
+        return `${resultHeader(cn ? "角色设定" : "Characters", cn ? "展示项目中的主要角色、关系网络与人物插画。" : "Showcase the main cast, relationship network, and character art.", tabs)}<div class="result-shell"><section class="result-main"><section class="panel"><h2>${cn ? "主要角色" : "Main Characters"}</h2><div class="asset-gallery">${data.characters.map((c) => `<article class="gallery-card"><div class="${avatarClass(c[1])}" style="height:220px;margin-bottom:12px"></div><b>${c[1]}</b><small>${c[0]} · ${c[2]}</small><small>${c[3]}</small>${tags([c[4], c[5]])}</article>`).join("")}</div></section><section class="panel"><h2>${cn ? "角色关系" : "Character Relationships"}</h2><div class="showcase-grid">${data.relations.map((item) => `<div class="mini"><p>${item}</p></div>`).join("")}</div></section><section class="panel"><h2>${cn ? "角色列表" : "Cast List"}</h2><div class="outputs">${data.characters.map((c) => `<div class="out"><span>${c[1]} · ${c[0]}</span><span class="file-status">${c[6]}</span></div>`).join("")}</div></section></section><aside class="result-rail"><section class="rail-card"><h2>${cn ? "角色详情" : "Character Detail"}</h2><div class="${avatarClass(data.characters[0][1])}" style="height:260px;margin:10px 0"></div><h3 style="color:white">${data.characters[0][1]}</h3><p style="color:#cbd5e1;line-height:1.7">${data.characters[0][2]}${cn ? "，" : ", "}${data.characters[0][3]}.</p></section><section class="rail-card"><h2>${cn ? "设定图集" : "Design Set"}</h2><div class="asset-gallery" style="grid-template-columns:repeat(3,1fr)">${data.characters.slice(0,3).map((c) => `<div class="${avatarClass(c[1])}"></div>`).join("")}</div></section></aside></div>`;
       }
 
       function renderGameplayModuleEditor() {
@@ -1412,20 +1419,52 @@
 
       function renderResultGameplayPage() {
         const data = editableProject;
-        return `${resultHeader("玩法 & 系统设计", "展示核心玩法、规则、系统与体验循环。", ["概览", "核心循环", "玩法系统", "战斗系统", "成长系统", "数值 & 平衡"])}<div class="result-shell"><section class="result-main"><section class="panel"><h2>玩法 CG 预览</h2><div class="cg-preview has-video"><video src="assets/gameplay-cg-demo.mp4" autoplay muted loop playsinline preload="metadata"></video><span style="position:absolute;left:16px;bottom:14px;z-index:2;color:#e2e8f0">CG 预览 · Demo 循环演示</span></div></section><section class="panel"><h2>玩法概览</h2><p style="line-height:1.8;color:#cbd5e1">玩家将在科技与修仙共存的未来世界中探索、战斗与成长，通过选择不同路线影响伙伴关系与世界结局。</p>${tags(["RPG / Roguelike", "第三人称", "探索", "战斗", "成长", "抉择"])}</section><section class="panel"><h2>玩法系统</h2><div class="showcase-grid">${data.gameplay.map(([title, items]) => `<div class="mini"><b>${title}</b>${list(items)}</div>`).join("")}</div></section>${renderGameplayModuleEditor()}</section><aside class="result-rail"><section class="rail-card"><h2>核心机制</h2>${list(["修仙与科技结合", "动态世界事件", "因果抉择系统", "多结局", "Roguelike 元素"])}</section><section class="rail-card"><h2>关键信息</h2><div class="outputs">${["推荐等级：Lv.1 - Lv.100+", "游戏时长预估：30 - 80 小时", "存档方式：自动 / 手动", "支持平台：PC / Console / Mobile"].map((x) => `<div class="out"><span>${x}</span></div>`).join("")}</div></section></aside></div>`;
+        const cn = languageMode === "cn";
+        const pageTitle = cn ? "玩法 & 系统设计" : "Gameplay & System Design";
+        const pageSubtitle = cn ? "展示核心玩法、规则、系统与体验循环。" : "Showcase the core gameplay, rules, systems, and experience loop.";
+        const tabs = cn
+          ? ["概览", "核心循环", "玩法系统", "战斗系统", "成长系统", "数值 & 平衡"]
+          : ["Overview", "Core Loop", "Gameplay Systems", "Combat", "Progression", "Balance"];
+        const cgTitle = cn ? "玩法 CG 预览" : "Gameplay CG Preview";
+        const cgCaption = cn ? "CG 预览 · Demo 循环演示" : "CG Preview · Demo Loop";
+        const overviewTitle = cn ? "玩法概览" : "Gameplay Overview";
+        const overviewCopy = cn
+          ? "玩家将在科技与修仙共存的未来世界中探索、战斗与成长，通过选择不同路线影响伙伴关系与世界结局。"
+          : "Players explore, fight, and grow in a future world where cultivation and technology coexist, shaping companion bonds and world outcomes through route choices.";
+        const overviewTags = cn
+          ? ["RPG / Roguelike", "第三人称", "探索", "战斗", "成长", "抉择"]
+          : ["RPG / Roguelike", "Third Person", "Exploration", "Combat", "Progression", "Choices"];
+        const systemsTitle = cn ? "玩法系统" : "Gameplay Systems";
+        const coreTitle = cn ? "核心机制" : "Core Mechanics";
+        const coreItems = cn
+          ? ["修仙与科技结合", "动态世界事件", "因果抉择系统", "多结局", "Roguelike 元素"]
+          : ["Cultivation x Technology", "Dynamic World Events", "Cause-and-Effect Choices", "Multiple Endings", "Roguelike Elements"];
+        const keyTitle = cn ? "关键信息" : "Key Info";
+        const keyItems = cn
+          ? ["推荐等级：Lv.1 - Lv.100+", "游戏时长预估：30 - 80 小时", "存档方式：自动 / 手动", "支持平台：PC / Console / Mobile"]
+          : ["Recommended Level: Lv.1 - Lv.100+", "Estimated Playtime: 30 - 80 hours", "Save Mode: Auto / Manual", "Platforms: PC / Console / Mobile"];
+        return `${resultHeader(pageTitle, pageSubtitle, tabs)}<div class="result-shell"><section class="result-main"><section class="panel"><h2>${cgTitle}</h2><div class="cg-preview has-video"><video src="assets/gameplay-cg-demo.mp4" autoplay muted loop playsinline preload="metadata"></video><span style="position:absolute;left:16px;bottom:14px;z-index:2;color:#e2e8f0">${cgCaption}</span></div></section><section class="panel"><h2>${overviewTitle}</h2><p style="line-height:1.8;color:#cbd5e1">${overviewCopy}</p>${tags(overviewTags)}</section><section class="panel"><h2>${systemsTitle}</h2><div class="showcase-grid">${data.gameplay.map(([title, items]) => `<div class="mini"><b>${title}</b>${list(items)}</div>`).join("")}</div></section>${renderGameplayModuleEditor()}</section><aside class="result-rail"><section class="rail-card"><h2>${coreTitle}</h2>${list(coreItems)}</section><section class="rail-card"><h2>${keyTitle}</h2><div class="outputs">${keyItems.map((x) => `<div class="out"><span>${x}</span></div>`).join("")}</div></section></aside></div>`;
       }
 
       function renderResultVisualPage() {
         const data = editableProject;
-        const monsters = ["影噬兽", "白发幽灵", "甲壳巨兽", "夜网恐魔", "怪物设定集"];
-        return `${resultHeader("美术 & 视觉", "展示所有视觉资产的概览与管理，不进入单图编辑。", ["概览", "角色", "场景 / 地图", "怪物", "道具 & 武器", "视觉风格"])}<div class="result-shell"><section class="result-main"><section class="panel"><h2>角色设计 <small style="color:#94a3b8">12 个资产</small></h2><div class="asset-gallery">${data.characters.concat(data.characters).map((c) => `<article class="gallery-card"><div class="${avatarClass(c[1])}" style="height:150px;margin-bottom:10px"></div><b>${c[1]}</b><small>${c[5]}</small></article>`).join("")}</div></section><section class="panel"><h2>场景 / 地图 <small style="color:#94a3b8">8 个资产</small></h2><div class="asset-gallery">${data.art[0][1].concat(data.art[1][1]).map((name) => `<article class="gallery-card"><div class="${thumbClass(name)}"></div><b>${name}</b><small>场景插画</small></article>`).join("")}</div></section><section class="panel"><h2>怪物 / 生物 <small style="color:#94a3b8">7 个资产</small></h2><div class="asset-gallery">${monsters.map((name) => `<article class="gallery-card"><div class="${thumbClass(name)}"></div><b>${name}</b><small>怪物插画</small></article>`).join("")}</div></section></section><aside class="result-rail"><section class="rail-card"><h2>项目视觉概览</h2><div class="asset-thumb project-visual-thumb" style="height:120px"></div><h3 style="color:white">${data.title}</h3></section><section class="rail-card"><h2>视觉统计</h2><div class="outputs">${["总资产 43", "角色 12", "场景 / 地图 8", "怪物 / 生物 7", "道具 / 武器 10"].map((x) => `<div class="out"><span>${x}</span></div>`).join("")}</div></section><section class="rail-card"><h2>风格关键词</h2>${tags(data.keywords.slice(0, 8))}</section></aside></div>`;
+        const cn = languageMode === "cn";
+        const monsters = cn ? ["影噬兽", "白发幽灵", "甲壳巨兽", "夜网恐魔", "怪物设定集"] : ["Shadow Eater", "White-Haired Wraith", "Shell Behemoth", "Nightweb Horror", "Creature Sheet"];
+        const tabs = cn ? ["概览", "角色", "场景 / 地图", "怪物", "道具 & 武器", "视觉风格"] : ["Overview", "Characters", "Scenes / Maps", "Creatures", "Props & Weapons", "Visual Style"];
+        const stats = cn ? ["总资产 43", "角色 12", "场景 / 地图 8", "怪物 / 生物 7", "道具 / 武器 10"] : ["Total Assets 43", "Characters 12", "Scenes / Maps 8", "Creatures 7", "Props / Weapons 10"];
+        return `${resultHeader(cn ? "美术 & 视觉" : "Art & Visual", cn ? "管理所有视觉资产，点击单项后可以单独修改提示词。" : "Manage visual assets and edit individual prompts without overwriting the full project.", tabs)}<div class="result-shell"><section class="result-main"><section class="panel"><h2>${cn ? "角色设计" : "Character Design"} <small style="color:#94a3b8">${cn ? "12 个资产" : "12 assets"}</small></h2><div class="asset-gallery">${data.characters.concat(data.characters).map((c) => `<article class="gallery-card"><div class="${avatarClass(c[1])}" style="height:150px;margin-bottom:10px"></div><b>${c[1]}</b><small>${c[5]}</small></article>`).join("")}</div></section><section class="panel"><h2>${cn ? "场景 / 地图" : "Scenes / Maps"} <small style="color:#94a3b8">${cn ? "8 个资产" : "8 assets"}</small></h2><div class="asset-gallery">${data.art[0][1].concat(data.art[1][1]).map((name) => `<article class="gallery-card"><div class="${thumbClass(name)}"></div><b>${name}</b><small>${cn ? "场景插画" : "Scene art"}</small></article>`).join("")}</div></section><section class="panel"><h2>${cn ? "怪物 / 生物" : "Creatures"} <small style="color:#94a3b8">${cn ? "7 个资产" : "7 assets"}</small></h2><div class="asset-gallery">${monsters.map((name) => `<article class="gallery-card"><div class="${thumbClass(name)}"></div><b>${name}</b><small>${cn ? "怪物插画" : "Creature art"}</small></article>`).join("")}</div></section></section><aside class="result-rail"><section class="rail-card"><h2>${cn ? "项目视觉概览" : "Project Visual Overview"}</h2><div class="asset-thumb project-visual-thumb" style="height:120px"></div><h3 style="color:white">${data.title}</h3></section><section class="rail-card"><h2>${cn ? "视觉统计" : "Visual Stats"}</h2><div class="outputs">${stats.map((x) => `<div class="out"><span>${x}</span></div>`).join("")}</div></section><section class="rail-card"><h2>${cn ? "风格关键词" : "Style Keywords"}</h2>${tags(data.keywords.slice(0, 8))}</section></aside></div>`;
       }
 
       function renderResultModelsPage() {
+        const cn = languageMode === "cn";
         const assets = getModelAssets();
-        const monsters = [{ name: "影魇兽", type: "怪物 / 生物" }, { name: "虚空行者", type: "怪物 / 生物" }, { name: "骨翼魔", type: "怪物 / 生物" }];
+        const monsters = cn
+          ? [{ name: "影魇兽", type: "怪物 / 生物" }, { name: "虚空行者", type: "怪物 / 生物" }, { name: "骨翼魔", type: "怪物 / 生物" }]
+          : [{ name: "Shadow Eater", type: "Creature" }, { name: "Void Stalker", type: "Creature" }, { name: "Bonewing Demon", type: "Creature" }];
         const all = assets.concat(monsters);
-        return `${resultHeader("3D 模型生成", "展示项目中的人物、场景、道具与怪物模型资产。", ["全部", "角色", "场景建筑", "道具", "武器", "怪物 / 生物"])}<div class="result-shell"><section class="result-main"><section class="panel"><h2>模型资产库</h2><div class="asset-gallery">${all.map((asset, index) => `<article class="gallery-card"><div class="asset-thumb model-thumb"></div><b>${asset.name}</b><small>${asset.type}</small><span class="tag">${index % 2 === 0 ? "灰模" : "已上色"}</span><span class="tag">FBX</span><span class="tag">OBJ</span><span class="tag">GLB</span></article>`).join("")}</div></section></section><aside class="result-rail"><section class="rail-card"><h2>模型预览</h2><div class="asset-thumb model-thumb" style="height:260px"></div><h3 style="color:white">${all[0].name}</h3></section><section class="rail-card"><h2>模型信息</h2><div class="outputs">${["类型：" + all[0].type, "状态：已完成", "面数：128,652", "顶点数：73,891", "格式：FBX / OBJ / GLB"].map((x) => `<div class="out"><span>${x}</span></div>`).join("")}</div></section></aside></div>`;
+        const tabs = cn ? ["全部", "角色", "场景建筑", "道具", "武器", "怪物 / 生物"] : ["All", "Characters", "Architecture", "Props", "Weapons", "Creatures"];
+        const facts = cn ? ["类型：" + all[0].type, "状态：已完成", "面数：128,652", "顶点数：73,891", "格式：FBX / OBJ / GLB"] : ["Type: " + all[0].type, "Status: Ready", "Faces: 128,652", "Vertices: 73,891", "Formats: FBX / OBJ / GLB"];
+        return `${resultHeader(cn ? "3D 模型生成" : "3D Models", cn ? "展示项目中的人物、场景、道具与怪物模型资产。" : "Review generated character, scene, prop, and creature model assets.", tabs)}<div class="result-shell"><section class="result-main"><section class="panel"><h2>${cn ? "模型资产库" : "Model Asset Library"}</h2><div class="asset-gallery">${all.map((asset, index) => `<article class="gallery-card"><div class="asset-thumb model-thumb"></div><b>${asset.name}</b><small>${asset.type}</small><span class="tag">${index % 2 === 0 ? (cn ? "灰模" : "Greybox") : (cn ? "已上色" : "Textured")}</span><span class="tag">FBX</span><span class="tag">OBJ</span><span class="tag">GLB</span></article>`).join("")}</div></section></section><aside class="result-rail"><section class="rail-card"><h2>${cn ? "模型预览" : "Model Preview"}</h2><div class="asset-thumb model-thumb" style="height:260px"></div><h3 style="color:white">${all[0].name}</h3></section><section class="rail-card"><h2>${cn ? "模型信息" : "Model Info"}</h2><div class="outputs">${facts.map((x) => `<div class="out"><span>${x}</span></div>`).join("")}</div></section></aside></div>`;
       }
 
       function switchPage(page) {
@@ -2070,10 +2109,10 @@
         const active = assets[selected] || assets[0];
         const cards = assets.map((asset, index) => `<button class="gallery-card ${index === selected ? "active" : ""}" ${kind === "art" ? `data-art-asset="${index}"` : `data-model-asset="${index}"`} type="button"><div class="asset-thumb ${kind === "model" ? "model-thumb" : ""}"></div><b>${asset.name}</b><small>${asset.type}</small><small>${asset.detail}</small><span class="lock-badge">${cn ? "锁定" : "Locked"}</span></button>`).join("");
         if (kind === "art") {
-          return `<h2>${cn ? "美术资产画廊" : "Art Asset Gallery"} <small style="color:#94a3b8;font-size:12px">${cn ? "Art Gallery" : "美术画廊"}</small></h2><div class="asset-editor-layout"><div class="asset-gallery">${cards}</div><aside class="mini" id="art-asset-editor"><h3>${active.name}</h3><small style="color:#94a3b8">${active.type}</small><div class="editor-field" style="margin-top:12px"><label>${cn ? "作品关键词" : "Asset Keywords"}</label><textarea id="art-asset-prompt">${active.detail}</textarea></div><div class="editor-field"><label>${cn ? "修改关键词" : "Edit Keywords"}</label><input id="art-asset-style" value="${editableProject.keywords.slice(0, 4).join(cn ? "、" : ", ")}"></div><button id="save-art-asset" type="button" style="width:100%;margin-top:12px">${cn ? "保存这张作品" : "Save This Asset"}</button></aside></div>`;
+          return `<h2>${cn ? "美术资产画廊" : "Art Asset Gallery"} <small style="color:#94a3b8;font-size:12px">${cn ? "美术画廊" : "Art Gallery"}</small></h2><div class="asset-editor-layout"><div class="asset-gallery">${cards}</div><aside class="mini" id="art-asset-editor"><h3>${active.name}</h3><small style="color:#94a3b8">${active.type}</small><div class="editor-field" style="margin-top:12px"><label>${cn ? "作品关键词" : "Asset Keywords"}</label><textarea id="art-asset-prompt">${active.detail}</textarea></div><div class="editor-field"><label>${cn ? "修改关键词" : "Edit Keywords"}</label><input id="art-asset-style" value="${editableProject.keywords.slice(0, 4).join(cn ? "、" : ", ")}"></div><button id="save-art-asset" type="button" style="width:100%;margin-top:12px">${cn ? "保存这张作品" : "Save This Asset"}</button></aside></div>`;
         }
         const material = selected % 2 === 0 ? (cn ? "灰模 / 未上色" : "Greybox / Untextured") : (cn ? "已上色 / 材质完成" : "Textured / Material Complete");
-        return `<h2>${cn ? "3D 模型资产库" : "3D Model Library"} <small style="color:#94a3b8;font-size:12px">${cn ? "3D Model Library" : "模型资产库"}</small></h2><div class="asset-editor-layout"><div class="asset-gallery">${cards}</div><aside class="mini" id="model-asset-editor"><h3>${active.name}</h3><small style="color:#94a3b8">${active.type}</small><div class="editor-field" style="margin-top:12px"><label>${cn ? "模型关键词" : "Model Keywords"}</label><textarea id="model-asset-spec">${active.detail}</textarea></div><div class="editor-field"><label>${cn ? "材质状态" : "Material Status"}</label><input id="model-asset-material" value="${material}"></div><div class="editor-field"><label>${cn ? "输出格式" : "Output Formats"}</label><input id="model-asset-format" value="${cn ? "FBX、OBJ、GLB" : "FBX, OBJ, GLB"}"></div><button id="save-model-asset" type="button" style="width:100%;margin-top:12px">${cn ? "保存这个模型" : "Save This Model"}</button></aside></div>`;
+        return `<h2>${cn ? "3D 模型资产库" : "3D Model Library"} <small style="color:#94a3b8;font-size:12px">${cn ? "模型资产库" : "3D Model Library"}</small></h2><div class="asset-editor-layout"><div class="asset-gallery">${cards}</div><aside class="mini" id="model-asset-editor"><h3>${active.name}</h3><small style="color:#94a3b8">${active.type}</small><div class="editor-field" style="margin-top:12px"><label>${cn ? "模型关键词" : "Model Keywords"}</label><textarea id="model-asset-spec">${active.detail}</textarea></div><div class="editor-field"><label>${cn ? "材质状态" : "Material Status"}</label><input id="model-asset-material" value="${material}"></div><div class="editor-field"><label>${cn ? "输出格式" : "Output Formats"}</label><input id="model-asset-format" value="${cn ? "FBX、OBJ、GLB" : "FBX, OBJ, GLB"}"></div><button id="save-model-asset" type="button" style="width:100%;margin-top:12px">${cn ? "保存这个模型" : "Save This Model"}</button></aside></div>`;
       }
 
       function selectArtAsset(index) {
@@ -2696,7 +2735,7 @@
         document.querySelectorAll("[data-username-label]").forEach((node) => node.textContent = name);
       }
 
-      let languageMode = "cn";
+      let languageMode = "en";
 
       const i18n = {
         cn: {
@@ -2800,6 +2839,7 @@
       }
 
       function applyLanguageMode() {
+        document.documentElement.lang = languageMode === "cn" ? "zh-CN" : "en";
         document.querySelectorAll("[data-i18n]").forEach((node) => {
           node.innerHTML = tr(node.dataset.i18n);
         });
