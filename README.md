@@ -10,6 +10,21 @@ This is a static clickable MVP. It uses mock data, local interactions, and demo 
 - Interactive prototype: https://yuriknight01-web.github.io/ai-creator-studio/ai-creator-studio-mvp.html
 - Design system page: https://yuriknight01-web.github.io/ai-creator-studio/design-system.html
 
+## Portfolio Demo Path
+
+The portfolio entry is English-first for international review. It is designed so a reviewer can understand the product in roughly three minutes:
+
+1. Read the case study framing: problem, target users, product role, and prototype boundary.
+2. Open the interactive prototype from the hero CTA.
+3. Start with the Tianyan Era dashboard and project overview.
+4. Review the World Bible, Gameplay, Characters, Art & Visual, and 3D Models surfaces.
+5. Open Documents to inspect delivery, version history, review status, and handoff preview.
+6. Return to the portfolio page to inspect the design system and AI agent architecture.
+
+The strongest resume link is the portfolio case study:
+
+https://yuriknight01-web.github.io/ai-creator-studio/
+
 ## Product Overview
 
 The product explores how AI can accelerate structured creative work without replacing the designer's role. The designer defines the workflow, information architecture, design system, review points, and output structure. AI acts as an execution layer that generates, updates, and organizes content inside a controlled product experience.
@@ -83,6 +98,7 @@ This page is intentionally static for the portfolio version. A production versio
 
 The prototype is structured around simulated AI workflow stages:
 
+- Prompt intake router: collects creative direction, optional settings, target audience, and visual constraints.
 - World agent: creates world premise, factions, conflict, and key art direction.
 - Gameplay agent: creates genre, combat, progression, and system loops.
 - Character agent: creates cast, factions, traits, and relationship networks.
@@ -107,6 +123,9 @@ The current MVP includes or simulates:
 - Mock export package
 - Review and version status
 - Developer handoff preview
+- Version comparison actions
+- Restore previous version action
+- Human approval action
 
 The prototype uses mock data and delayed UI feedback where no backend exists. The intended state model includes loading, empty, success, error, partial result, insufficient credits, retry, approval, and restore.
 
@@ -128,6 +147,7 @@ The current export flow is a high-fidelity prototype. It shows document status, 
 
 - Keep AI outputs structured instead of chat-like.
 - Separate generation from review and editing.
+- Make the design system readable as product logic: components, states, tokens, and agent contracts can all be referenced by AI workflows.
 - Let users modify individual characters, art assets, gameplay modules, and model specs.
 - Treat art and 3D assets as reusable project libraries.
 - Make the portfolio entry English-first for international reviewers.

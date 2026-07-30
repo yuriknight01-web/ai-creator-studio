@@ -110,6 +110,11 @@
         box-shadow: 0 18px 48px rgba(37, 99, 235, 0.26);
       }
       .btn.secondary { background: rgba(3, 7, 18, 0.58); box-shadow: none; }
+      .btn.ghost {
+        background: rgba(15, 23, 42, 0.72);
+        border-color: rgba(148, 163, 184, 0.26);
+        box-shadow: none;
+      }
 
       .hero {
         position: relative;
@@ -191,6 +196,37 @@
       }
       .panel h3 { font-size: 20px; margin-bottom: 12px; }
       .panel p, .panel li { color: var(--muted); line-height: 1.72; }
+      .case-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 14px;
+        align-items: stretch;
+      }
+      .case-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(18, 29, 50, 0.66));
+      }
+      .case-card strong {
+        display: block;
+        color: var(--soft);
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      .role-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .role-list li {
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        background: rgba(2, 6, 23, 0.28);
+      }
       .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
       .tag {
         border: 1px solid rgba(59, 130, 246, 0.5);
@@ -269,6 +305,32 @@
       }
       .video-frame video { width: 100%; max-height: 520px; object-fit: cover; }
       .timeline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+      .demo-path { display: grid; gap: 10px; counter-reset: demo; }
+      .demo-step {
+        display: grid;
+        grid-template-columns: 44px 1fr auto;
+        gap: 14px;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 14px;
+        background: rgba(15, 23, 42, 0.68);
+      }
+      .demo-step::before {
+        counter-increment: demo;
+        content: counter(demo, decimal-leading-zero);
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border: 1px solid rgba(125, 211, 252, 0.34);
+        border-radius: 8px;
+        color: var(--cyan);
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .demo-step b { color: var(--soft); }
+      .demo-step span:last-child { color: var(--gold); font-size: 12px; font-weight: 900; }
       .step {
         border: 1px solid var(--line);
         border-radius: var(--radius);
@@ -299,6 +361,39 @@
       }
       .agent-card b { display: block; margin-bottom: 8px; color: var(--soft); }
       .agent-card p { color: var(--muted); font-size: 13px; line-height: 1.55; }
+      .architecture {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(138px, 1fr));
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+      }
+      .arch-node {
+        position: relative;
+        min-width: 138px;
+        border: 1px solid rgba(125, 211, 252, 0.24);
+        border-radius: var(--radius);
+        padding: 16px;
+        background: rgba(2, 6, 23, 0.42);
+      }
+      .arch-node:not(:last-child)::after {
+        content: "→";
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        color: var(--cyan);
+        transform: translateY(-50%);
+        font-weight: 900;
+      }
+      .arch-node small {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--gold);
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+      .arch-node b { color: var(--soft); }
+      .arch-node p { margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.55; }
       .token-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -336,6 +431,19 @@
         padding: 14px;
         background: rgba(2, 6, 23, 0.36);
       }
+      .version-table { display: grid; gap: 10px; }
+      .version-row {
+        display: grid;
+        grid-template-columns: 0.7fr 1.2fr 0.8fr 0.8fr;
+        gap: 12px;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 14px;
+        background: rgba(2, 6, 23, 0.34);
+      }
+      .version-row b { color: var(--soft); }
+      .version-row span { color: var(--muted); font-size: 13px; }
       .status-pill {
         border-radius: 999px;
         padding: 5px 8px;
@@ -358,7 +466,7 @@
       }
       @media (max-width: 980px) {
         .nav-links { display: none; }
-        .meta-strip, .cols-3, .cols-2, .feature-map, .timeline, .token-grid, .handoff-grid { grid-template-columns: 1fr; }
+        .meta-strip, .cols-3, .cols-2, .case-grid, .feature-map, .timeline, .token-grid, .handoff-grid, .version-row { grid-template-columns: 1fr; }
         .feature-list, .image-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .image-tile.wide { grid-column: span 2; }
       }
@@ -383,14 +491,15 @@
           </span>
         </a>
         <div class="nav-links">
+          <a href="#case">Case Study</a>
+          <a href="#demo">3-Min Demo</a>
           <a href="#product">Product</a>
           <a href="#workflow">AI Workflow</a>
+          <a href="#agents">Agent Model</a>
           <a href="#system">Design System</a>
-          <a href="#assets">Visual Assets</a>
           <a href="#handoff">Handoff</a>
-          <a href="#prototype">Prototype</a>
         </div>
-        <a class="btn" href="ai-creator-studio-mvp.html">Open Interactive Prototype</a>
+        <a class="btn" href="ai-creator-studio-mvp.html">Start Demo</a>
       </nav>
 
       <header class="hero" id="top">
@@ -402,8 +511,9 @@
             world setting, gameplay systems, character relationships, art direction, 3D asset planning, review states, and export handoff.
           </p>
           <div class="hero-actions">
-            <a class="btn" href="ai-creator-studio-mvp.html">Open Interactive Prototype</a>
+            <a class="btn" href="ai-creator-studio-mvp.html">Start 3-minute Demo</a>
             <a class="btn secondary" href="#product">Read Case Study</a>
+            <a class="btn ghost" href="design-system.html">View Design System</a>
           </div>
           <div class="meta-strip" aria-label="Project summary">
             <div class="meta"><span>Role Focus</span><strong>Product Design + Design Engineering</strong></div>
@@ -415,6 +525,56 @@
       </header>
 
       <main>
+        <section class="section" id="case">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Case Study at a Glance</div>
+              <h2>An AI workflow product for turning creative ambiguity into structured production assets.</h2>
+            </div>
+            <p class="section-lede">
+              This portfolio case is intentionally framed as a design engineering prototype: the value is the workflow model, component system, review logic, and handoff structure, not a claim that the current static MVP is connected to real generation APIs.
+            </p>
+          </div>
+          <div class="case-grid">
+            <article class="case-card">
+              <strong>Design Challenge</strong>
+              <p>AI tools can produce impressive text and images, but creative teams still need repeatable structure: project stages, controlled editing, source-aware review, version history, and delivery packages that other collaborators can use.</p>
+              <div class="tag-row">
+                <span class="tag">AI Workflow</span>
+                <span class="tag">Design System</span>
+                <span class="tag">High-fidelity Prototype</span>
+                <span class="tag">Mock Data</span>
+              </div>
+            </article>
+            <article class="case-card">
+              <strong>My Product Design Role</strong>
+              <ul class="role-list">
+                <li>Defined the end-to-end IA from idea intake to world bible, systems, assets, review, and export.</li>
+                <li>Designed reusable UI patterns for dense AI SaaS workspaces, asset libraries, modals, cards, tables, and status states.</li>
+                <li>Modeled how agents, tools, and human review should collaborate without removing designer control.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="demo">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">3-minute Demo Path</div>
+              <h2>A reviewer can understand the full product loop without setup.</h2>
+            </div>
+            <a class="btn" href="ai-creator-studio-mvp.html">Start Demo</a>
+          </div>
+          <div class="demo-path">
+            <div class="demo-step"><div><b>Input creative direction</b><p>Start with a prompt and optional settings for genre, tone, audience, loop, and visual style.</p></div><span>Input</span></div>
+            <div class="demo-step"><div><b>Generate World Bible</b><p>Review the project premise, major factions, conflict, locations, and editable keywords.</p></div><span>Agent Output</span></div>
+            <div class="demo-step"><div><b>Review Gameplay</b><p>Open the system page with CG preview, core loop, combat, progression, and editable modules.</p></div><span>Review</span></div>
+            <div class="demo-step"><div><b>Manage Characters</b><p>Inspect cast cards, detail states, faction assignments, and the relationship network.</p></div><span>Edit</span></div>
+            <div class="demo-step"><div><b>Inspect Art and 3D Assets</b><p>Browse visual assets, enlarge references, edit prompts, and review model planning states.</p></div><span>Tooling</span></div>
+            <div class="demo-step"><div><b>Approve and Export</b><p>Check review status, version metadata, handoff preview, and mock delivery package.</p></div><span>Delivery</span></div>
+          </div>
+        </section>
+
         <section class="section" id="product">
           <div class="section-head">
             <div>
@@ -485,6 +645,29 @@
             <article class="agent-card"><small>04 Agent</small><b>Cast Curator</b><p>Creates characters, factions, relationship states, and editable bios.</p></article>
             <article class="agent-card"><small>05 Tool</small><b>Asset Generator</b><p>Organizes visual assets, 3D greybox states, prompts, and references.</p></article>
             <article class="agent-card"><small>06 Review</small><b>Handoff</b><p>Prepares export packages, review status, and developer-facing specs.</p></article>
+          </div>
+        </section>
+
+        <section class="section" id="agents">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">AI Agent + Tool Architecture</div>
+              <h2>Designers define the system; AI agents execute structured tasks inside it.</h2>
+            </div>
+            <p class="section-lede">
+              The production vision treats the design system as an AI-readable asset layer. Each agent receives structured input, calls a scoped tool, returns structured output, and waits for human review before the project state changes.
+            </p>
+          </div>
+          <div class="architecture" aria-label="Designer input to delivery architecture">
+            <article class="arch-node"><small>01</small><b>Designer Input</b><p>Prompt, constraints, style tokens, target audience, and project intent.</p></article>
+            <article class="arch-node"><small>02</small><b>Agent Router</b><p>Selects world, gameplay, character, visual, 3D, or delivery agent.</p></article>
+            <article class="arch-node"><small>03</small><b>Scoped Tool</b><p>Runs a mock generator, asset planner, relationship builder, or export mapper.</p></article>
+            <article class="arch-node"><small>04</small><b>Structured Output</b><p>Returns editable fields, cards, tables, assets, and status metadata.</p></article>
+            <article class="arch-node"><small>05</small><b>Human Review</b><p>Approve, edit, regenerate, retry, compare, or restore a version.</p></article>
+            <article class="arch-node"><small>06</small><b>Delivery</b><p>Creates handoff-ready docs, specs, and package states for collaborators.</p></article>
+          </div>
+          <div class="decision-note" style="margin-top:16px">
+            Portfolio boundary: the current demo uses mock data and simulated delay. The design shows how the AI workflow should behave before production APIs, storage, authentication, or billing are connected.
           </div>
         </section>
 
@@ -564,6 +747,14 @@
               </div>
             </article>
           </div>
+          <article class="panel" style="margin-top:14px">
+            <h3>Version and Review Model</h3>
+            <div class="version-table" aria-label="Version and review model">
+              <div class="version-row"><b>v0.1</b><span>AI generated initial world, cast, gameplay, and asset structure.</span><span class="status-pill">Pending Review</span><span>Generate / Retry</span></div>
+              <div class="version-row"><b>v0.2</b><span>Designer edits character factions, relationship graph, visual prompts, and gameplay modules.</span><span class="status-pill">Reviewed</span><span>Compare / Restore</span></div>
+              <div class="version-row"><b>v0.3</b><span>Approved delivery snapshot for portfolio review and developer handoff preview.</span><span class="status-pill">Approved</span><span>Approve / Export</span></div>
+            </div>
+          </article>
         </section>
       </main>
 

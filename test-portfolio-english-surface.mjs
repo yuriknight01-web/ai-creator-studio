@@ -31,6 +31,10 @@ const mvpMustInclude = [
   "3D Model Library",
   "Developer Handoff Preview",
   "Review + Version Status",
+  "Version History",
+  "Compare v0.2 / v0.3",
+  "Restore Previous Version",
+  "Approve Handoff",
   "Current Limitation",
   "Data Source: Mock Data"
 ];
@@ -43,9 +47,15 @@ const indexMustInclude = [
   '<html lang="en"',
   "AI Creator Studio",
   "Open Interactive Prototype",
+  "Start 3-minute Demo",
+  "Case Study at a Glance",
+  "3-minute Demo Path",
   "Open Component Library",
   "Design Engineering",
   "AI Workflow",
+  "AI Agent + Tool Architecture",
+  "Designer Input",
+  "Version and Review Model",
   "Review + Handoff",
   "Delivery Package"
 ];
