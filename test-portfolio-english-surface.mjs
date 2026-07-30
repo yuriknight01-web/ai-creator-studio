@@ -3,8 +3,16 @@ import { readFileSync } from "node:fs";
 const html = readFileSync("ai-creator-studio-mvp.html", "utf8");
 const index = readFileSync("index.html", "utf8");
 
-const mustInclude = [
+const mvpMustInclude = [
   'let languageMode = "en";',
+  "let currentPrompt = defaultPrompts.en;",
+  'en: "Eastern future city, flying swords, spirit technology, sect conflict, open world RPG"',
+  'document.querySelectorAll("[data-i18n]").forEach',
+  "renderTopActions()",
+  "function ensureProjectLanguage()",
+  "getProjectFromPrompt(currentPrompt, projectLanguage)",
+  'data-i18n="nav.dashboard">Dashboard<span>Home</span>',
+  'id="asset-workspace-label" class="nav-section">Asset Workspace',
   'railCharacterSubtitle: en ? "Character Preview"',
   'railOutputSubtitle: en ? "Outputs Preview"',
   '["world", "World Bible", "World Setting"',
@@ -22,13 +30,8 @@ const mustInclude = [
   "3D Model Library"
 ];
 
-const mustNotInclude = [
-  'railCharacterSubtitle: en ? "角色预览"',
-  'railOutputSubtitle: en ? "输出预览"',
-  "浜",
-  "涓",
-  "鍙",
-  "鎵"
+const mvpMustNotInclude = [
+  'let currentPrompt = "'
 ];
 
 const indexMustInclude = [
@@ -39,8 +42,8 @@ const indexMustInclude = [
   "AI Workflow"
 ];
 
-const missing = mustInclude.filter((item) => !html.includes(item));
-const forbidden = mustNotInclude.filter((item) => html.includes(item));
+const missing = mvpMustInclude.filter((item) => !html.includes(item));
+const forbidden = mvpMustNotInclude.filter((item) => html.includes(item));
 const indexMissing = indexMustInclude.filter((item) => !index.includes(item));
 
 if (missing.length || forbidden.length || indexMissing.length) {

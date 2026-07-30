@@ -737,25 +737,25 @@
       <section class="creator-app">
         <aside class="sidebar">
           <div class="side-brand"><span class="side-logo">A</span><div>AI CREATOR STUDIO<small>POWERED BY CGA</small></div></div>
-        <button class="nav-item active" data-page="dashboard" type="button">▣ <div data-i18n="nav.dashboard">工作台<span>Dashboard</span></div></button>
-          <div id="asset-workspace-label" class="nav-section">资产工作区</div>
-        <button class="nav-item" data-page="world" type="button">⬡ <div data-i18n="nav.world">世界观生成<span>World Bible</span></div></button>
-        <button class="nav-item" data-page="gameplay" type="button">◈ <div data-i18n="nav.gameplay">玩法 & 系统<span>Gameplay</span></div></button>
-        <button class="nav-item" data-page="characters" data-edit-view="characters" type="button">♙ <div data-i18n="nav.characters">角色设定<span>Characters</span></div></button>
-        <button class="nav-item" data-page="visual" data-edit-view="visual" type="button">✎ <div data-i18n="nav.visual">美术 & 视觉<span>Art & Visual</span></div></button>
-        <button class="nav-item" data-page="models" type="button">⬢ <div data-i18n="nav.models">3D 模型生成<span>3D Models</span></div></button>
-        <button class="nav-item" data-page="documents" type="button">▤ <div data-i18n="nav.documents">项目文档<span>Documents</span></div></button>
-          <div id="project-management-label" class="nav-section">项目管理</div>
-        <button class="nav-item" data-page="projects" type="button">◎ <div data-i18n="nav.projects">我的项目<span>My Projects</span></div></button>
-        <button class="nav-item" data-page="history" type="button">☆ <div data-i18n="nav.favorites">灵感收藏<span>Favorites</span></div></button>
-        <button class="nav-item" data-page="cases" type="button">◇ <div data-i18n="nav.cases">用户案例<span>Shared Cases</span></div></button>
+        <button class="nav-item active" data-page="dashboard" type="button">▣ <div data-i18n="nav.dashboard">Dashboard<span>Home</span></div></button>
+          <div id="asset-workspace-label" class="nav-section">Asset Workspace</div>
+        <button class="nav-item" data-page="world" type="button">⬡ <div data-i18n="nav.world">World Bible<span>World Setting</span></div></button>
+        <button class="nav-item" data-page="gameplay" type="button">◈ <div data-i18n="nav.gameplay">Gameplay<span>System Design</span></div></button>
+        <button class="nav-item" data-page="characters" data-edit-view="characters" type="button">♙ <div data-i18n="nav.characters">Characters<span>Cast & Relations</span></div></button>
+        <button class="nav-item" data-page="visual" data-edit-view="visual" type="button">✎ <div data-i18n="nav.visual">Art & Visual<span>Visual Assets</span></div></button>
+        <button class="nav-item" data-page="models" type="button">⬢ <div data-i18n="nav.models">3D Models<span>Model Assets</span></div></button>
+        <button class="nav-item" data-page="documents" type="button">▤ <div data-i18n="nav.documents">Documents<span>Deliverables</span></div></button>
+          <div id="project-management-label" class="nav-section">Project Management</div>
+        <button class="nav-item" data-page="projects" type="button">◎ <div data-i18n="nav.projects">My Projects<span>Project Library</span></div></button>
+        <button class="nav-item" data-page="history" type="button">☆ <div data-i18n="nav.favorites">Favorites<span>Saved Assets</span></div></button>
+        <button class="nav-item" data-page="cases" type="button">◇ <div data-i18n="nav.cases">Shared Cases<span>Case Library</span></div></button>
           <div class="current-project">
-            <small id="side-current-label" style="color:#94a3b8">当前项目</small>
-            <h3 id="side-title" style="margin:8px 0 2px;color:white">天衍纪元</h3>
-            <small id="side-version" style="color:#94a3b8">v0.1 · 进行中</small>
+            <small id="side-current-label" style="color:#94a3b8">Current Project</small>
+            <h3 id="side-title" style="margin:8px 0 2px;color:white">Tianyan Era</h3>
+            <small id="side-version" style="color:#94a3b8">v0.1 · In Progress</small>
             <div class="mini-progress"><span></span></div>
             <small style="color:#94a3b8">68%</small>
-            <button id="new-project-button" type="button" style="width:100%;margin-top:14px">新建项目</button>
+            <button id="new-project-button" type="button" style="width:100%;margin-top:14px">New Project</button>
           </div>
         </aside>
 
@@ -1105,11 +1105,11 @@
 
       let editableProject = null;
       let hasCreatedProject = true;
-      let currentPrompt = "东方未来城市，御剑飞行，灵能科技，门派纷争，开放世界 RPG";
       const defaultPrompts = {
         cn: "东方未来城市，御剑飞行，灵能科技，门派纷争，开放世界 RPG",
         en: "Eastern future city, flying swords, spirit technology, sect conflict, open world RPG"
       };
+      let currentPrompt = defaultPrompts.en;
       let currentEditView = "world";
       let currentPage = "dashboard";
       let selectedCharacterIndex = 0;
@@ -1159,6 +1159,14 @@
       function syncDefaultPromptLanguage() {
         if (languageMode === "en" && currentPrompt === defaultPrompts.cn) currentPrompt = defaultPrompts.en;
         if (languageMode === "cn" && currentPrompt === defaultPrompts.en) currentPrompt = defaultPrompts.cn;
+      }
+
+      function ensureProjectLanguage() {
+        const projectLanguage = languageMode === "en" ? "en" : "cn";
+        if (!editableProject || editableProject.projectLanguage !== projectLanguage) {
+          editableProject = getProjectFromPrompt(currentPrompt, projectLanguage);
+        }
+        return editableProject;
       }
 
       function detectProjectLanguage(promptValue) {
@@ -1262,6 +1270,12 @@
         const copy = getDashboardCopy();
         const setText = (id, value) => { const node = $(id); if (node) node.textContent = value; };
         const setHTML = (id, value) => { const node = $(id); if (node) node.innerHTML = value; };
+        document.querySelectorAll("[data-i18n]").forEach((node) => {
+          node.innerHTML = tr(node.dataset.i18n);
+        });
+        document.querySelectorAll(".workspace-top > .top-icons").forEach((node) => {
+          node.outerHTML = renderTopActions();
+        });
         setText("dashboard-welcome", copy.welcome);
         setText("dashboard-subtitle", copy.subtitle);
         setText("dashboard-current-label", copy.currentProject);
@@ -1312,9 +1326,7 @@
       }
 
       function renderDashboard() {
-        const projectLanguage = languageMode === "en" ? "en" : "cn";
-        if (!editableProject || editableProject.projectLanguage !== projectLanguage) editableProject = getProjectFromPrompt(currentPrompt, projectLanguage);
-        const data = editableProject;
+        const data = ensureProjectLanguage();
         localizeDashboardShell();
         $("side-title").textContent = data.title;
         $("dash-title").textContent = data.title;
@@ -1366,6 +1378,7 @@
 
       function openResultPage(page) {
         currentPage = `result:${page}`;
+        ensureProjectLanguage();
         document.body.classList.add("module-mode");
         document.body.classList.remove("wizard-mode");
         document.body.classList.remove("dashboard-page-active");
@@ -1379,6 +1392,7 @@
       }
 
       function renderResultPage(page) {
+        ensureProjectLanguage();
         const renderers = {
           world: renderResultWorldPage,
           characters: renderResultCharactersPage,
@@ -1493,8 +1507,7 @@
       function renderModulePage() {
         const module = $("module-page");
         if (!module || !editableProject || currentPage === "dashboard" || String(currentPage).startsWith("result:")) return;
-        const projectLanguage = languageMode === "en" ? "en" : "cn";
-        if (editableProject.projectLanguage !== projectLanguage) editableProject = getProjectFromPrompt(currentPrompt, projectLanguage);
+        ensureProjectLanguage();
         localizeDashboardShell();
         const renderers = {
           world: renderWorldPage,
@@ -1626,8 +1639,10 @@
       }
 
       function startGenerationFlow(wizardPrompt) {
-        const optionText = Array.from(document.querySelectorAll("[data-preset-field] .preset-trigger")).map((node) => node.dataset.presetValue).filter(Boolean).join("，");
-        currentPrompt = [wizardPrompt.value.trim(), optionText].filter(Boolean).join("，") || currentPrompt;
+        const projectLanguage = languageMode === "en" ? "en" : "cn";
+        const separator = projectLanguage === "en" ? ", " : "，";
+        const optionText = Array.from(document.querySelectorAll("[data-preset-field] .preset-trigger")).map((node) => node.dataset.presetValue).filter(Boolean).join(separator);
+        currentPrompt = [wizardPrompt.value.trim(), optionText].filter(Boolean).join(separator) || currentPrompt;
         $("module-page").innerHTML = renderGenerationStatus();
         const steps = Array.from(document.querySelectorAll("[data-generation-step]"));
         steps.forEach((step, index) => {
@@ -1636,7 +1651,7 @@
           }, index * 430);
         });
         setTimeout(() => {
-          editableProject = getProjectFromPrompt(currentPrompt);
+          editableProject = getProjectFromPrompt(currentPrompt, projectLanguage);
           hasCreatedProject = true;
           renderDashboard();
           document.body.classList.remove("wizard-mode");
@@ -2356,16 +2371,19 @@
         if (save) save.addEventListener("click", saveEditorChanges);
         const regen = $("module-regenerate");
         if (regen) regen.addEventListener("click", () => {
-          const optionText = Array.from(document.querySelectorAll("[data-keyword-setting]")).map((node) => node.value).filter(Boolean).join("，");
-          currentPrompt = [$("module-prompt").value.trim(), optionText].filter(Boolean).join("，") || currentPrompt;
-          editableProject = getProjectFromPrompt(currentPrompt);
+          const projectLanguage = languageMode === "en" ? "en" : "cn";
+          const separator = projectLanguage === "en" ? ", " : "，";
+          const optionText = Array.from(document.querySelectorAll("[data-keyword-setting]")).map((node) => node.value).filter(Boolean).join(separator);
+          currentPrompt = [$("module-prompt").value.trim(), optionText].filter(Boolean).join(separator) || currentPrompt;
+          editableProject = getProjectFromPrompt(currentPrompt, projectLanguage);
           renderDashboard();
           switchPage("dashboard");
         });
         const saveKeywordSettings = $("save-keyword-settings");
         if (saveKeywordSettings) saveKeywordSettings.addEventListener("click", () => {
-          const optionText = Array.from(document.querySelectorAll("[data-keyword-setting]")).map((node) => node.value).filter(Boolean).join("，");
-          currentPrompt = [$("module-prompt").value.trim(), optionText].filter(Boolean).join("，") || currentPrompt;
+          const separator = languageMode === "en" ? ", " : "，";
+          const optionText = Array.from(document.querySelectorAll("[data-keyword-setting]")).map((node) => node.value).filter(Boolean).join(separator);
+          currentPrompt = [$("module-prompt").value.trim(), optionText].filter(Boolean).join(separator) || currentPrompt;
           editableProject.keywords = Array.from(new Set([...currentPrompt.split(/[，,、\s/]+/).filter(Boolean), ...editableProject.keywords])).slice(0, 8);
           renderDashboard();
           renderModulePage();
