@@ -4,6 +4,12 @@ AI Creator Studio is a portfolio-ready design engineering prototype for an AI-as
 
 This is a static clickable MVP. It uses mock data, local interactions, and demo assets. It does not currently connect to a production AI API, payment provider, authentication service, database, or file-generation backend.
 
+## Live Demo
+
+- Portfolio case study: https://yuriknight01-web.github.io/ai-creator-studio/
+- Interactive prototype: https://yuriknight01-web.github.io/ai-creator-studio/ai-creator-studio-mvp.html
+- Design system page: https://yuriknight01-web.github.io/ai-creator-studio/design-system.html
+
 ## Product Overview
 
 The product explores how AI can accelerate structured creative work without replacing the designer's role. The designer defines the workflow, information architecture, design system, review points, and output structure. AI acts as an execution layer that generates, updates, and organizes content inside a controlled product experience.
@@ -45,6 +51,7 @@ The prototype is organized around two primary surfaces:
 
 - Portfolio entry page: `index.html`
 - Clickable MVP: `ai-creator-studio-mvp.html`
+- Internal design system page: `design-system.html`
 
 The MVP contains:
 
@@ -63,20 +70,14 @@ The MVP contains:
 
 The interface uses a dark AI SaaS visual direction with restrained cards, compact controls, strong hierarchy, and asset-forward layouts.
 
-Current reusable UI patterns include:
+The project now includes a lightweight internal design system page that documents the prototype's foundations and reusable UI patterns:
 
-- Buttons
-- Tags
-- Cards
-- Panels
-- Modal overlays
-- Progress cards
-- Navigation rail
-- Asset gallery cards
-- Form inputs
-- Subscription and credits panels
+- Foundation tokens: color, typography, spacing, radius, surfaces, shadows, and semantic states
+- Core components: buttons, inputs, tags, cards, panels, modals, navigation, progress cards, delivery rows
+- Component states: default, hover, active, disabled, loading, error, selected
+- AI workflow primitives: Input, Agent, Tool, Output, Review
 
-Planned next step: extract these patterns into named design tokens and component definitions for color, spacing, radius, typography, shadow, interaction states, and layout behavior.
+This page is intentionally static for the portfolio version. A production version could export tokens into Figma, CSS variables, and frontend component packages.
 
 ## AI Agent and Tool Structure
 
@@ -104,8 +105,24 @@ The current MVP includes or simulates:
 - Language switching
 - Light and dark mode
 - Mock export package
+- Review and version status
+- Developer handoff preview
 
-Planned next step: add richer error, partial-result, retry, insufficient-credit, and version-comparison flows.
+The prototype uses mock data and delayed UI feedback where no backend exists. The intended state model includes loading, empty, success, error, partial result, insufficient credits, retry, approval, and restore.
+
+## Delivery and Handoff
+
+The Documents surface demonstrates how generated work becomes structured project delivery:
+
+- World Bible
+- Character Design Bible
+- Art Direction Bible
+- Gameplay Specification
+- 3D Asset Manifest
+- Project Proposal
+- Developer Handoff Preview
+
+The current export flow is a high-fidelity prototype. It shows document status, review status, version metadata, and handoff structure, but does not create real downloadable files yet.
 
 ## Key Design Decisions
 
@@ -115,6 +132,7 @@ Planned next step: add richer error, partial-result, retry, insufficient-credit,
 - Treat art and 3D assets as reusable project libraries.
 - Make the portfolio entry English-first for international reviewers.
 - Be explicit that this is a clickable prototype with mock data.
+- Keep AI positioned as an execution and acceleration layer. The designer owns the product direction, workflow, review model, and design system.
 
 ## Current Limitations
 
@@ -135,4 +153,3 @@ Planned next step: add richer error, partial-result, retry, insufficient-credit,
 - Add real document generation and downloadable handoff packages.
 - Add role-based collaboration for teams.
 - Expand localization beyond English and Chinese.
-

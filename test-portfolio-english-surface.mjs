@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 
 const html = readFileSync("ai-creator-studio-mvp.html", "utf8");
 const index = readFileSync("index.html", "utf8");
+const designSystem = readFileSync("design-system.html", "utf8");
 
 const mvpMustInclude = [
   'let languageMode = "en";',
@@ -27,7 +28,11 @@ const mvpMustInclude = [
   "Save Mode: Auto / Manual",
   "Platforms: PC / Console / Mobile",
   "Art Asset Gallery",
-  "3D Model Library"
+  "3D Model Library",
+  "Developer Handoff Preview",
+  "Review + Version Status",
+  "Current Limitation",
+  "Data Source: Mock Data"
 ];
 
 const mvpMustNotInclude = [
@@ -38,19 +43,33 @@ const indexMustInclude = [
   '<html lang="en"',
   "AI Creator Studio",
   "Open Interactive Prototype",
+  "Open Component Library",
   "Design Engineering",
-  "AI Workflow"
+  "AI Workflow",
+  "Review + Handoff",
+  "Delivery Package"
+];
+
+const designSystemMustInclude = [
+  '<html lang="en"',
+  "AI Creator Studio - Design System",
+  "Design tokens and workflow components",
+  "Reusable UI Patterns",
+  "Input -> Agent -> Tool -> Output -> Review",
+  "Component Library"
 ];
 
 const missing = mvpMustInclude.filter((item) => !html.includes(item));
 const forbidden = mvpMustNotInclude.filter((item) => html.includes(item));
 const indexMissing = indexMustInclude.filter((item) => !index.includes(item));
+const designSystemMissing = designSystemMustInclude.filter((item) => !designSystem.includes(item));
 
-if (missing.length || forbidden.length || indexMissing.length) {
+if (missing.length || forbidden.length || indexMissing.length || designSystemMissing.length) {
   console.error("Portfolio English surface regression failed.");
   if (missing.length) console.error(`Missing in MVP: ${missing.join(" | ")}`);
   if (forbidden.length) console.error(`Forbidden in MVP: ${forbidden.join(" | ")}`);
   if (indexMissing.length) console.error(`Missing in index: ${indexMissing.join(" | ")}`);
+  if (designSystemMissing.length) console.error(`Missing in design system: ${designSystemMissing.join(" | ")}`);
   process.exit(1);
 }
 

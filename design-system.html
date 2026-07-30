@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Creator Studio - Design System</title>
+    <meta name="description" content="Internal design system and component library for the AI Creator Studio prototype." />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #060b14;
+        --panel: rgba(13, 22, 38, 0.82);
+        --panel-strong: rgba(18, 30, 52, 0.94);
+        --line: rgba(148, 163, 184, 0.24);
+        --text: #f8fafc;
+        --muted: #a8b3c7;
+        --blue: #3b82f6;
+        --cyan: #22d3ee;
+        --teal: #0f9f8d;
+        --violet: #8b5cf6;
+        --gold: #f5c451;
+        --danger: #ef4444;
+        --success: #2dd4bf;
+        --radius: 8px;
+        --shadow: 0 24px 70px rgba(2, 6, 23, 0.32);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 18% 12%, rgba(34, 211, 238, 0.12), transparent 30rem),
+          radial-gradient(circle at 86% 10%, rgba(139, 92, 246, 0.16), transparent 32rem),
+          linear-gradient(180deg, #07101e, var(--bg));
+        color: var(--text);
+      }
+      a { color: inherit; text-decoration: none; }
+      .shell { width: min(1240px, calc(100% - 40px)); margin: 0 auto; padding: 32px 0 64px; }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 44px;
+      }
+      .brand { display: flex; align-items: center; gap: 12px; }
+      .mark {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border-radius: var(--radius);
+        border: 1px solid rgba(125, 211, 252, 0.4);
+        background: linear-gradient(145deg, rgba(59, 130, 246, 0.3), rgba(45, 212, 191, 0.18));
+        font-weight: 900;
+      }
+      .brand strong { display: block; letter-spacing: 0.24em; font-size: 13px; }
+      .brand span { display: block; color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: 0.2em; }
+      .btn {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(125, 211, 252, 0.34);
+        border-radius: var(--radius);
+        padding: 0 16px;
+        background: linear-gradient(135deg, var(--blue), var(--teal));
+        color: white;
+        font-weight: 900;
+      }
+      .btn.secondary { background: rgba(15, 23, 42, 0.68); }
+      .btn.disabled { opacity: 0.42; pointer-events: none; }
+      .hero {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: clamp(28px, 5vw, 56px);
+        background:
+          linear-gradient(90deg, rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.54)),
+          url("assets/project-visual-overview.png") center / cover no-repeat;
+        box-shadow: var(--shadow);
+      }
+      .eyebrow { color: var(--cyan); font-size: 12px; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; }
+      h1, h2, h3, p { margin: 0; }
+      h1 { max-width: 840px; margin-top: 14px; font-size: clamp(42px, 7vw, 82px); line-height: 0.98; }
+      .lede { max-width: 720px; margin-top: 18px; color: #d8e5f8; font-size: 18px; line-height: 1.7; }
+      .section { margin-top: 56px; }
+      .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
+      .section h2 { font-size: clamp(26px, 4vw, 42px); }
+      .grid { display: grid; gap: 14px; }
+      .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        padding: 20px;
+        box-shadow: 0 18px 48px rgba(2, 6, 23, 0.22);
+      }
+      .panel p, .panel li { color: var(--muted); line-height: 1.7; }
+      .swatch { height: 72px; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; margin-bottom: 12px; }
+      .sample-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        border: 1px solid rgba(59, 130, 246, 0.52);
+        border-radius: 6px;
+        padding: 0 9px;
+        background: rgba(30, 64, 175, 0.28);
+        color: #bfdbfe;
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .input {
+        width: 100%;
+        min-height: 44px;
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        border-radius: var(--radius);
+        background: rgba(2, 6, 23, 0.62);
+        color: var(--text);
+        padding: 0 12px;
+      }
+      .component-card {
+        display: grid;
+        gap: 12px;
+        min-height: 210px;
+      }
+      .mini-progress { height: 8px; border-radius: 999px; background: rgba(148, 163, 184, 0.22); overflow: hidden; }
+      .mini-progress span { display: block; width: 68%; height: 100%; background: linear-gradient(90deg, var(--cyan), var(--gold)); }
+      .status {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 5px 8px;
+        background: rgba(45, 212, 191, 0.14);
+        color: #99f6e4;
+        font-size: 11px;
+        font-weight: 900;
+      }
+      .modal-preview {
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        background: rgba(15, 23, 42, 0.74);
+        backdrop-filter: blur(14px);
+      }
+      .workflow-row {
+        display: grid;
+        grid-template-columns: 0.8fr 0.8fr 0.9fr 0.9fr 0.8fr;
+        gap: 10px;
+        align-items: stretch;
+      }
+      .workflow-row .panel { min-height: 150px; }
+      @media (max-width: 980px) {
+        .cols-4, .cols-3, .cols-2, .workflow-row { grid-template-columns: 1fr; }
+        .topbar, .section-head { align-items: stretch; flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="index.html">
+          <span class="mark">A</span>
+          <span><strong>AI CREATOR STUDIO</strong><span>DESIGN SYSTEM</span></span>
+        </a>
+        <div class="sample-row">
+          <a class="btn secondary" href="index.html">Back to Case Study</a>
+          <a class="btn" href="ai-creator-studio-mvp.html">Open Prototype</a>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="eyebrow">Internal Component Library</div>
+        <h1>Design tokens and workflow components for an AI creative workspace.</h1>
+        <p class="lede">
+          This page documents the reusable UI language behind the clickable prototype: color, spacing, surfaces, states, and AI workflow components.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div><div class="eyebrow">Tokens</div><h2>Foundations</h2></div>
+          <p class="lede">The system keeps the product dark, dense, asset-forward, and professional while leaving room for generated media.</p>
+        </div>
+        <div class="grid cols-4">
+          <article class="panel"><div class="swatch" style="background:#060b14"></div><h3>Canvas</h3><p>#060b14 / primary app background</p></article>
+          <article class="panel"><div class="swatch" style="background:#121e34"></div><h3>Panel</h3><p>Layered cards and side rails</p></article>
+          <article class="panel"><div class="swatch" style="background:linear-gradient(135deg,#3b82f6,#0f9f8d)"></div><h3>Primary Action</h3><p>Generate, continue, save, and export</p></article>
+          <article class="panel"><div class="swatch" style="background:linear-gradient(90deg,#22d3ee,#8b5cf6,#f5c451,#2dd4bf)"></div><h3>Semantic Accents</h3><p>AI, selected, warning, success</p></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div><div class="eyebrow">Components</div><h2>Reusable UI Patterns</h2></div>
+          <p class="lede">Components are designed for default, hover, active, disabled, loading, error, and selected states.</p>
+        </div>
+        <div class="grid cols-3">
+          <article class="panel component-card">
+            <h3>Button</h3>
+            <a class="btn" href="#">Generate</a>
+            <a class="btn secondary" href="#">Edit</a>
+            <a class="btn disabled" href="#">Disabled</a>
+          </article>
+          <article class="panel component-card">
+            <h3>Input + Tags</h3>
+            <input class="input" value="Eastern future city, spirit technology" aria-label="Prompt sample" />
+            <div class="sample-row"><span class="tag">World Bible</span><span class="tag">Gameplay</span><span class="tag">Review</span></div>
+          </article>
+          <article class="panel component-card">
+            <h3>Progress Card</h3>
+            <p>World Bible / 90%</p>
+            <div class="mini-progress"><span></span></div>
+            <span class="status">Approved</span>
+          </article>
+          <article class="panel component-card">
+            <h3>Modal</h3>
+            <div class="modal-preview">
+              <div class="eyebrow">Regenerate Asset</div>
+              <p>Edit only this selected image. Other project assets remain unchanged.</p>
+            </div>
+          </article>
+          <article class="panel component-card">
+            <h3>Delivery Row</h3>
+            <div class="sample-row"><span class="tag">PDF</span><span class="tag">PPT</span><span class="tag">ZIP</span></div>
+            <p>Used for export and developer handoff packages.</p>
+          </article>
+          <article class="panel component-card">
+            <h3>State Tokens</h3>
+            <div class="sample-row"><span class="status">Success</span><span class="tag">Loading</span><span class="tag">Partial</span><span class="tag">Retry</span></div>
+            <p>Key AI workflow states are visible and actionable.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div><div class="eyebrow">AI Workflow Model</div><h2>Input -> Agent -> Tool -> Output -> Review</h2></div>
+        </div>
+        <div class="workflow-row">
+          <article class="panel"><h3>Input</h3><p>Prompt, settings, constraints, language, and reference context.</p></article>
+          <article class="panel"><h3>Agent</h3><p>World, gameplay, character, visual, 3D, and delivery agents.</p></article>
+          <article class="panel"><h3>Tool</h3><p>Mock generators, asset libraries, versioning, export packaging.</p></article>
+          <article class="panel"><h3>Output</h3><p>Structured project modules, not isolated chat responses.</p></article>
+          <article class="panel"><h3>Review</h3><p>Human approval, edit, retry, restore, and handoff checkpoints.</p></article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

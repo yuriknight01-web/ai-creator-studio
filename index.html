@@ -276,6 +276,81 @@
         background: rgba(15, 23, 42, 0.7);
       }
       .step span { color: var(--gold); font-weight: 900; }
+      .workflow-board {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(150px, 1fr));
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+      }
+      .agent-card {
+        min-width: 150px;
+        border: 1px solid rgba(125, 211, 252, 0.22);
+        border-radius: var(--radius);
+        padding: 14px;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(22, 33, 58, 0.72));
+      }
+      .agent-card small {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--cyan);
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+      .agent-card b { display: block; margin-bottom: 8px; color: var(--soft); }
+      .agent-card p { color: var(--muted); font-size: 13px; line-height: 1.55; }
+      .token-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .token-card {
+        min-height: 132px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 16px;
+        background: rgba(15, 23, 42, 0.68);
+      }
+      .token-swatch {
+        height: 34px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 6px;
+        margin-bottom: 12px;
+      }
+      .handoff-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 14px;
+      }
+      .handoff-list {
+        display: grid;
+        gap: 10px;
+      }
+      .handoff-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 14px;
+        background: rgba(2, 6, 23, 0.36);
+      }
+      .status-pill {
+        border-radius: 999px;
+        padding: 5px 8px;
+        background: rgba(45, 212, 191, 0.16);
+        color: #99f6e4;
+        font-size: 11px;
+        font-weight: 900;
+      }
+      .decision-note {
+        border-left: 3px solid var(--cyan);
+        padding: 16px 18px;
+        background: rgba(34, 211, 238, 0.08);
+        color: #dbeafe;
+        line-height: 1.72;
+      }
       .footer {
         border-top: 1px solid rgba(148, 163, 184, 0.16);
         padding: 34px clamp(20px, 4vw, 64px);
@@ -283,7 +358,7 @@
       }
       @media (max-width: 980px) {
         .nav-links { display: none; }
-        .meta-strip, .cols-3, .cols-2, .feature-map, .timeline { grid-template-columns: 1fr; }
+        .meta-strip, .cols-3, .cols-2, .feature-map, .timeline, .token-grid, .handoff-grid { grid-template-columns: 1fr; }
         .feature-list, .image-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .image-tile.wide { grid-column: span 2; }
       }
@@ -310,7 +385,9 @@
         <div class="nav-links">
           <a href="#product">Product</a>
           <a href="#workflow">AI Workflow</a>
+          <a href="#system">Design System</a>
           <a href="#assets">Visual Assets</a>
+          <a href="#handoff">Handoff</a>
           <a href="#prototype">Prototype</a>
         </div>
         <a class="btn" href="ai-creator-studio-mvp.html">Open Interactive Prototype</a>
@@ -401,6 +478,35 @@
             <div class="step"><span>Tool</span><p>Mock generators simulate text, art, model planning, billing, and export tools.</p></div>
             <div class="step"><span>Review</span><p>Users edit, approve, regenerate, compare, and prepare delivery outputs.</p></div>
           </div>
+          <div class="workflow-board" style="margin-top:14px" aria-label="Agent workflow stages">
+            <article class="agent-card"><small>01 Input</small><b>Prompt Intake</b><p>Collects creative intent, optional constraints, and target experience.</p></article>
+            <article class="agent-card"><small>02 Agent</small><b>World Builder</b><p>Structures premise, factions, core conflict, tone, and key locations.</p></article>
+            <article class="agent-card"><small>03 Agent</small><b>Gameplay Designer</b><p>Turns direction into loops, systems, progression, and balance notes.</p></article>
+            <article class="agent-card"><small>04 Agent</small><b>Cast Curator</b><p>Creates characters, factions, relationship states, and editable bios.</p></article>
+            <article class="agent-card"><small>05 Tool</small><b>Asset Generator</b><p>Organizes visual assets, 3D greybox states, prompts, and references.</p></article>
+            <article class="agent-card"><small>06 Review</small><b>Handoff</b><p>Prepares export packages, review status, and developer-facing specs.</p></article>
+          </div>
+        </section>
+
+        <section class="section" id="system">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Design System</div>
+              <h2>A compact component system for an AI creation workspace.</h2>
+            </div>
+            <p class="section-lede">
+              The prototype defines reusable tokens and interaction patterns for navigation, cards, tags, modals, forms, progress states, asset rows, and delivery panels.
+            </p>
+          </div>
+          <div class="token-grid">
+            <article class="token-card"><div class="token-swatch" style="background:#060b14"></div><h3>Color</h3><p>Dark SaaS base with cyan, blue, violet, gold, and green status accents.</p></article>
+            <article class="token-card"><div class="token-swatch" style="background:linear-gradient(135deg,#3b82f6,#0f9f8d)"></div><h3>State</h3><p>Primary, hover, selected, disabled, loading, success, warning, and error states.</p></article>
+            <article class="token-card"><div class="token-swatch" style="background:rgba(15,23,42,.72)"></div><h3>Surface</h3><p>8px cards, clear borders, restrained shadows, and dense operational layouts.</p></article>
+            <article class="token-card"><div class="token-swatch" style="background:repeating-linear-gradient(90deg,#22d3ee 0 16px,#8b5cf6 16px 32px,#f5c451 32px 48px)"></div><h3>Components</h3><p>Buttons, inputs, tags, progress cards, rails, modals, galleries, and tables.</p></article>
+          </div>
+          <div class="hero-actions">
+            <a class="btn" href="design-system.html">Open Component Library</a>
+          </div>
         </section>
 
         <section class="section" id="assets">
@@ -429,20 +535,34 @@
           </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="handoff">
           <div class="section-head">
             <div>
-              <div class="eyebrow">Prototype States</div>
-              <h2>Designed for realistic product behavior.</h2>
+              <div class="eyebrow">Review + Handoff</div>
+              <h2>Designed for realistic product behavior and delivery.</h2>
             </div>
             <p class="section-lede">
               The current prototype uses mock data and local interactions. It does not claim real API generation, live billing, or production authentication.
             </p>
           </div>
-          <div class="grid cols-3">
-            <article class="panel"><h3>Generation States</h3><p>Loading, generated result, edit, review, and continue states are represented with simulated workflow feedback.</p></article>
-            <article class="panel"><h3>Credits + Subscription</h3><p>Billing and points screens are high-fidelity mockups for demonstrating monetization logic and interaction design.</p></article>
-            <article class="panel"><h3>Export Handoff</h3><p>Delivery cards preview the intended handoff structure for documents, art direction, gameplay specs, and project proposal assets.</p></article>
+          <div class="handoff-grid">
+            <article class="panel">
+              <h3>Delivery Package</h3>
+              <div class="handoff-list">
+                <div class="handoff-row"><span>World Bible</span><span class="status-pill">Approved</span></div>
+                <div class="handoff-row"><span>Character Design Bible</span><span class="status-pill">Reviewed</span></div>
+                <div class="handoff-row"><span>Art Direction Bible</span><span class="status-pill">Ready</span></div>
+                <div class="handoff-row"><span>Gameplay Specification</span><span class="status-pill">Ready</span></div>
+                <div class="handoff-row"><span>Developer Handoff Preview</span><span class="status-pill">Mock</span></div>
+              </div>
+            </article>
+            <article class="panel">
+              <h3>Prototype States</h3>
+              <p>Loading, empty, success, error, partial result, insufficient credits, edit, approve, retry, and export-ready states are represented as high-fidelity prototype behavior.</p>
+              <div class="decision-note" style="margin-top:16px">
+                Design decision: AI is not presented as replacing the designer. The product frames AI as an execution layer inside a designer-defined workflow, review model, and design system.
+              </div>
+            </article>
           </div>
         </section>
       </main>
